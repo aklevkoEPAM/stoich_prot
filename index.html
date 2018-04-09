@@ -40,18 +40,15 @@
                             <i class="icon icon-fw icon-stack-2x icon-empty"></i>
                         </i>
                     </button>
-                    <div class="table-padded-content"><strong>(R1)</strong>Potassium hydroxide</div>
+                    <div class="table-padded-content"><strong>(R1)</strong> Potassium hydroxide</div>
                     <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
                         <i class="icon icon-options"></i>
                     </button>
                 </div>
             </td>
             <td>
-                <button class="btn btn-framed btn-framed-rounded">
-                    <i class="icon-stack icon-stack-fw icon-check">
-                        <i class="icon icon-fw icon-stack-2x icon-tick"></i>
-                        <i class="icon icon-fw icon-stack-2x icon-empty"></i>
-                    </i>
+                <button class="btn-rounded" ng-click="potHasLimit = !potHasLimit">
+                    <i ng-if="potHasLimit" class="icon icon-tick"></i>
                 </button>
             </td>
             <td>
@@ -94,7 +91,9 @@
                 </div>
             </td>
             <td>
-                <div class="table-padded-content">2</div>
+               <button class="btn-rounded" ng-click="hydHasLimit = !hydHasLimit">
+                    <i ng-if="hydHasLimit" class="icon icon-tick"></i>
+               </button>
             </td>
             <td>
                 <div class="table-padded-content">HCl</div>
