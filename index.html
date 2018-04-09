@@ -1,0 +1,162 @@
+<!doctype html>
+<html ng-app>
+<head>
+    <script src="vendor/angular.min.js"></script>
+    <link rel="stylesheet/less" type="text/css" href="styles.less"/>
+    <script src="vendor/less.min.js"></script>
+</head>
+<body>
+<section class="stoich-section stoich-section_reactants">
+    <table class="stoich-section__table">
+        <thead>
+        <tr>
+            <td>Reactants
+                <button class="btn btn-clean right">
+                    <i class="icon icon-plus"></i>
+                    Add new
+                </button>
+            </td>
+            <td>Limit</td>
+            <td>Formula</td>
+            <td>MW <em>(g/mol)</em></td>
+            <td>Equiv.
+                <button class="icon icon-lock_closed"></button>
+            </td>
+            <td>Mass</td>
+            <td>Volume</td>
+            <td>Purity <em>(%)</em></td>
+            <td>Quantifier</td>
+            <td>n</td>
+            <td>Comment</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <div class="wrapper-flexible">
+                    <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
+                        <i class="icon-stack icon-stack-fw">
+                            <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
+                            <i class="icon icon-fw icon-stack-2x icon-empty"></i>
+                        </i>
+                    </button>
+                    <div class="table-padded-content"><strong>(R1)</strong>Potassium hydroxide</div>
+                    <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
+                        <i class="icon icon-options"></i>
+                    </button>
+                </div>
+            </td>
+            <td>
+                <button class="btn btn-framed btn-framed-rounded">
+                    <i class="icon-stack icon-stack-fw icon-check">
+                        <i class="icon icon-fw icon-stack-2x icon-tick"></i>
+                        <i class="icon icon-fw icon-stack-2x icon-empty"></i>
+                    </i>
+                </button>
+            </td>
+            <td>
+                <div class="table-padded-content">KOH</div>
+            </td>
+            <td>
+                <div class="table-padded-content">56.106</div>
+            </td>
+            <td>
+                <div class="table-padded-content">1</div>
+            </td>
+            <td>
+                <div class="table-padded-content">5.00 g</div>
+            </td>
+            <td></td>
+            <td>
+                <div class="table-padded-content">100</div>
+            </td>
+            <td>
+                <div class="table-padded-content">0.25 g/mL</div>
+            </td>
+            <td>
+                <div class="table-padded-content">19.213 mmol</div>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="wrapper-flexible">
+                    <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
+                        <i class="icon-stack icon-stack-fw">
+                            <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
+                            <i class="icon icon-fw icon-stack-2x icon-empty"></i>
+                        </i>
+                    </button>
+                    <div class="table-padded-content"><strong>(R2)</strong> Hydrochloric acid</div>
+                    <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
+                        <i class="icon icon-options"></i>
+                    </button>
+                </div>
+            </td>
+            <td>
+                <div class="table-padded-content">2</div>
+            </td>
+            <td>
+                <div class="table-padded-content">HCl</div>
+            </td>
+            <td>
+                <div class="table-padded-content">36.461</div>
+            </td>
+            <td>
+                <div class="table-padded-content">1</div>
+            </td>
+            <td>
+                <div class="table-padded-content">3.249 g</div>
+            </td>
+            <td></td>
+            <td>
+                <div class="table-padded-content">100</div>
+            </td>
+            <td>
+                <div class="table-padded-content">0.25 g/mL</div>
+            </td>
+            <td>
+                <div class="table-padded-content">31.1 mmol</div>
+            </td>
+            <td>
+                <div class="table-padded-content">This is a comment, not very large, but anyway</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="stoich-section stoich-section_agents">
+    <table class="stoich-section__table">
+        <thead>
+        <tr>
+            <td>Agents
+                <button class="btn btn-clean right">
+                    <i class="icon icon-plus"></i>
+                    Add new
+                </button>
+            </td>
+            <td></td>
+        </tr>
+        </thead>
+    </table>
+</section>
+
+
+<section class="stoich-section stoich-section_products">
+    <table class="stoich-section__table">
+        <thead>
+        <tr>
+            <td>Products
+                <button class="btn btn-clean right">
+                    <i class="icon icon-plus"></i>
+                    Add new
+                </button>
+            </td>
+            <td></td>
+        </tr>
+        </thead>
+    </table>
+</section>
+</body>
+</html>
