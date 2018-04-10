@@ -16,14 +16,11 @@ body {
   box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 4px 0 rgba(0, 0, 0, 0.1);
   margin: 10px 10px 0;
   &__table {
-    width: 100%;
+    table-layout: fixed;
     td {
       border-right: 2px solid @mainLight85;
       font: normal 13px/1.4 @font-roboto;
       padding: 0 7px;
-      &:last-of-type {
-        border: none;
-      }
     }
     thead {
       td {
@@ -31,9 +28,6 @@ body {
         color: @main;
         font: 500 13px/26px @font-roboto;
         padding-top: 3px;
-        &:first-child {
-          width: 315px;
-        }
         em {
           font-weight: normal;
           font-style: normal
@@ -99,6 +93,45 @@ body {
   }
 }
 
+// cell widths and alignment styles
+.cell {
+  &-fixed-component {
+    .width-with-minwidth(315px);
+  }
+  &-limit {
+    text-align: center;
+    .width-with-minwidth(46px);
+  }
+  &-formula {
+    min-width: 180px;
+    //.width-with-minwidth(180px);
+  }
+  &-mw {
+    .width-with-minwidth(86px);
+  }
+  &-equiv {
+    .width-with-minwidth(79px);
+  }
+  &-mass {
+    .width-with-minwidth(67px);
+  }
+  &-volume {
+    .width-with-minwidth(86px);
+  }
+  &-purity {
+    .width-with-minwidth(73px);
+  }
+  &-quantifier {
+    .width-with-minwidth(76px);
+  }
+  &-n {
+    .width-with-minwidth(92px);
+  }
+  &-comment {
+    .width-with-minwidth(140px);
+  }
+}
+
 // local mixins
 .section-colorizing(@border, @gradient-start) {
   border-color: @border;
@@ -108,6 +141,10 @@ body {
       border-left: 3px solid @border;
     }
   }
+}
+.width-with-minwidth(@width) {
+  min-width: @width;
+  width: @width;
 }
 
 // buttons

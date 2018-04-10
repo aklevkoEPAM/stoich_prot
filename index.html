@@ -8,31 +8,45 @@
 <body>
 <section class="stoich-section stoich-section_reactants">
     <table class="stoich-section__table">
+        <!--this colgroup is a must to make the table static-->
+        <colgroup>
+            <col class="cell-fixed-component">
+            <col class="cell-limit">
+            <col class="cell-formula">
+            <col class="cell-mw">
+            <col class="cell-equiv">
+            <col class="cell-mass">
+            <col class="cell-volume">
+            <col class="cell-purity">
+            <col class="cell-quantifier">
+            <col class="cell-n">
+            <col class="cell-comment">
+        </colgroup>
         <thead>
         <tr>
-            <td>Reactants
+            <td class="cell-fixed-component">Reactants
                 <button class="btn btn-clean right">
                     <i class="icon icon-plus"></i>
                     Add new
                 </button>
             </td>
-            <td>Limit</td>
-            <td>Formula</td>
-            <td>MW <em>(g/mol)</em></td>
-            <td>Equiv.
+            <td class="cell-limit">Limit</td>
+            <td class="cell-formula">Formula</td>
+            <td class="cell-mw">MW <em>(g/mol)</em></td>
+            <td class="cell-equiv">Equiv.
                 <button class="icon icon-lock_closed"></button>
             </td>
-            <td>Mass</td>
-            <td>Volume</td>
-            <td>Purity <em>(%)</em></td>
-            <td>Quantifier</td>
-            <td>n</td>
-            <td>Comment</td>
+            <td class="cell-mass">Mass</td>
+            <td class="cell-volume">Volume</td>
+            <td class="cell-purity">Purity <em>(%)</em></td>
+            <td class="cell-quantifier">Quantifier</td>
+            <td class="cell-n">n</td>
+            <td class="cell-comment">Comment</td>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>
+            <td class="cell-fixed-component">
                 <div class="wrapper-flexible">
                     <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
                         <i class="icon-stack icon-stack-fw">
@@ -46,37 +60,38 @@
                     </button>
                 </div>
             </td>
-            <td>
+            <td class="cell-limit">
                 <button class="btn-rounded" ng-click="potHasLimit = !potHasLimit">
                     <i ng-if="potHasLimit" class="icon icon-tick"></i>
                 </button>
             </td>
-            <td>
+            <td class="cell-formula">
                 <div class="table-padded-content">KOH</div>
             </td>
-            <td>
+            <td class="cell-mw">
                 <div class="table-padded-content">56.106</div>
             </td>
-            <td>
+            <td class="cell-equiv">
                 <div class="table-padded-content">1</div>
             </td>
-            <td>
+            <td class="cell-mass">
                 <div class="table-padded-content">5.00 g</div>
             </td>
-            <td></td>
-            <td>
+            <td class="cell-volume"></td>
+            <td class="cell-purity">
                 <div class="table-padded-content">100</div>
             </td>
-            <td>
+            <td class="cell-quantifier">
                 <div class="table-padded-content">0.25 g/mL</div>
             </td>
-            <td>
+            <td class="cell-n">
                 <div class="table-padded-content">19.213 mmol</div>
             </td>
-            <td></td>
+            <td class="cell-comment"></td>
         </tr>
+
         <tr>
-            <td>
+            <td class="cell-fixed-component">
                 <div class="wrapper-flexible">
                     <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
                         <i class="icon-stack icon-stack-fw">
@@ -90,37 +105,36 @@
                     </button>
                 </div>
             </td>
-            <td>
-               <button class="btn-rounded" ng-click="hydHasLimit = !hydHasLimit">
+            <td class="cell-limit">
+                <button class="btn-rounded" ng-click="hydHasLimit = !hydHasLimit">
                     <i ng-if="hydHasLimit" class="icon icon-tick"></i>
                </button>
             </td>
-            <td>
+            <td class="cell-formula">
                 <div class="table-padded-content">HCl</div>
             </td>
-            <td>
+            <td class="cell-mw">
                 <div class="table-padded-content">36.461</div>
             </td>
-            <td>
+            <td class="cell-equiv">
                 <div class="table-padded-content">1</div>
             </td>
-            <td>
+            <td class="cell-mass">
                 <div class="table-padded-content">3.249 g</div>
             </td>
-            <td></td>
-            <td>
+            <td class="cell-volume"></td>
+            <td class="cell-purity">
                 <div class="table-padded-content">100</div>
             </td>
-            <td>
+            <td class="cell-quantifier">
                 <div class="table-padded-content">0.25 g/mL</div>
             </td>
-            <td>
+            <td class="cell-n">
                 <div class="table-padded-content">31.1 mmol</div>
             </td>
-            <td>
-                <div class="table-padded-content">This is a comment, not very large, but anyway</div>
-            </td>
+            <td class="cell-comment">This is a comment, not very large, but anyway</td>
         </tr>
+
         </tbody>
     </table>
 </section>
@@ -129,7 +143,7 @@
     <table class="stoich-section__table">
         <thead>
         <tr>
-            <td>Agents
+            <td class="width-fixed-component">Agents
                 <button class="btn btn-clean right">
                     <i class="icon icon-plus"></i>
                     Add new
@@ -146,7 +160,7 @@
     <table class="stoich-section__table">
         <thead>
         <tr>
-            <td>Products
+            <td class="width-fixed-component">Products
                 <button class="btn btn-clean right">
                     <i class="icon icon-plus"></i>
                     Add new
