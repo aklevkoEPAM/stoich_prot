@@ -7,41 +7,20 @@
 </head>
 <body>
 <section class="stoich-section stoich-section_reactants">
-    <table class="stoich-section__table">
-        <!--this colgroup is a must to make the table static-->
+    <table class="stoich-section__table stoich-section__table_sticky">
         <colgroup>
             <col class="cell-fixed-component">
             <col class="cell-limit">
-            <col class="cell-formula">
-            <col class="cell-mw">
-            <col class="cell-equiv">
-            <col class="cell-mass">
-            <col class="cell-volume">
-            <col class="cell-purity">
-            <col class="cell-quantifier">
-            <col class="cell-n">
-            <col class="cell-comment">
         </colgroup>
         <thead>
         <tr>
-            <td class="cell-fixed-component">Reactants
+            <td class="cell-fixed-component colorized">Reactants
                 <button class="btn btn-clean right">
                     <i class="icon icon-plus"></i>
                     Add new
                 </button>
             </td>
             <td class="cell-limit">Limit</td>
-            <td class="cell-formula">Formula</td>
-            <td class="cell-mw">MW <em>(g/mol)</em></td>
-            <td class="cell-equiv">Equiv.
-                <button class="icon icon-lock_closed"></button>
-            </td>
-            <td class="cell-mass">Mass</td>
-            <td class="cell-volume">Volume</td>
-            <td class="cell-purity">Purity <em>(%)</em></td>
-            <td class="cell-quantifier">Quantifier</td>
-            <td class="cell-n">n</td>
-            <td class="cell-comment">Comment</td>
         </tr>
         </thead>
         <tbody>
@@ -65,6 +44,60 @@
                     <i ng-if="potHasLimit" class="icon icon-tick"></i>
                 </button>
             </td>
+        </tr>
+        <tr>
+            <td class="cell-fixed-component">
+                <div class="wrapper-flexible">
+                    <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
+                        <i class="icon-stack icon-stack-fw">
+                            <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
+                            <i class="icon icon-fw icon-stack-2x icon-empty"></i>
+                        </i>
+                    </button>
+                    <div class="table-padded-content"><strong>(R2)</strong> Hydrochloric acid</div>
+                    <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
+                        <i class="icon icon-options"></i>
+                    </button>
+                </div>
+            </td>
+            <td class="cell-limit">
+                <button class="btn-rounded" ng-click="hydHasLimit = !hydHasLimit">
+                    <i ng-if="hydHasLimit" class="icon icon-tick"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="stoich-section__table">
+        <!--this colgroup is a must to make the table static-->
+        <colgroup>
+            <col class="cell-formula">
+            <col class="cell-mw">
+            <col class="cell-equiv">
+            <col class="cell-mass">
+            <col class="cell-volume">
+            <col class="cell-purity">
+            <col class="cell-quantifier">
+            <col class="cell-n">
+            <col class="cell-comment">
+        </colgroup>
+        <thead>
+        <tr>
+            <td class="cell-formula">Formula</td>
+            <td class="cell-mw">MW <em>(g/mol)</em></td>
+            <td class="cell-equiv">Equiv.
+                <button class="icon icon-lock_closed"></button>
+            </td>
+            <td class="cell-mass">Mass</td>
+            <td class="cell-volume">Volume</td>
+            <td class="cell-purity">Purity <em>(%)</em></td>
+            <td class="cell-quantifier">Quantifier</td>
+            <td class="cell-n">n</td>
+            <td class="cell-comment">Comment</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
             <td class="cell-formula">
                 <div class="table-padded-content">KOH</div>
             </td>
@@ -91,25 +124,6 @@
         </tr>
 
         <tr>
-            <td class="cell-fixed-component">
-                <div class="wrapper-flexible">
-                    <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
-                        <i class="icon-stack icon-stack-fw">
-                            <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
-                            <i class="icon icon-fw icon-stack-2x icon-empty"></i>
-                        </i>
-                    </button>
-                    <div class="table-padded-content"><strong>(R2)</strong> Hydrochloric acid</div>
-                    <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
-                        <i class="icon icon-options"></i>
-                    </button>
-                </div>
-            </td>
-            <td class="cell-limit">
-                <button class="btn-rounded" ng-click="hydHasLimit = !hydHasLimit">
-                    <i ng-if="hydHasLimit" class="icon icon-tick"></i>
-               </button>
-            </td>
             <td class="cell-formula">
                 <div class="table-padded-content">HCl</div>
             </td>
@@ -132,7 +146,9 @@
             <td class="cell-n">
                 <div class="table-padded-content">31.1 mmol</div>
             </td>
-            <td class="cell-comment">This is a comment, not very large, but anyway</td>
+            <td class="cell-comment">
+                <div class="table-padded-content elliptic">This is a comment, not very large, but anyway</div>
+            </td>
         </tr>
 
         </tbody>

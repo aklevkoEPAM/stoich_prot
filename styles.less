@@ -14,9 +14,16 @@ body {
   border: 1px solid @main;
   border-radius: 2px;
   box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
   margin: 10px 10px 0;
   &__table {
+    display: block;
+    overflow: auto;
     table-layout: fixed;
+    &_sticky {
+      flex-shrink: 0;
+      overflow-x: hidden;
+    }
     td {
       border-right: 2px solid @mainLight85;
       font: normal 13px/1.4 @font-roboto;
@@ -62,7 +69,13 @@ body {
       }
     }
     .table-padded-content {
-      padding: 5px 2px;
+      padding: 6px 2px;
+    }
+    .elliptic {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: inherit;
     }
   }
   &_reactants {
@@ -94,11 +107,12 @@ body {
 }
 
 // cell widths and alignment styles
-.cell {
+.stoich-section__table .cell {
   &-fixed-component {
     .width-with-minwidth(315px);
   }
   &-limit {
+    line-height: 0; // need to remove
     text-align: center;
     .width-with-minwidth(46px);
   }
@@ -125,7 +139,7 @@ body {
     .width-with-minwidth(76px);
   }
   &-n {
-    .width-with-minwidth(92px);
+    .width-with-minwidth(95px);
   }
   &-comment {
     .width-with-minwidth(140px);
@@ -136,7 +150,7 @@ body {
 .section-colorizing(@border, @gradient-start) {
   border-color: @border;
   thead {
-    td:first-child {
+    td.colorized {
       background: linear-gradient(to right, @gradient-start, @mainLight95);
       border-left: 3px solid @border;
     }
