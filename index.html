@@ -1,11 +1,16 @@
 <!doctype html>
-<html ng-app>
+<html ng-app='app'>
 <head>
-    <script src="vendor/angular.min.js"></script>
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/angular-ui/ui-bootstrap-tpls-1.0.2.js"></script>
+
+    <link href="vendor/angular-xeditable/css/xeditable.css" rel="stylesheet">
+    <script src="vendor/angular-xeditable/js/xeditable.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet/less" type="text/css" href="styles.less"/>
-    <script src="vendor/less.min.js"></script>
+    <script src="vendor/less/less.min.js"></script>
 </head>
-<body>
+<body ng-controller="controller">
 <section class="stoich-section stoich-section_reactants">
     <table class="stoich-section__table stoich-section__table_sticky">
         <colgroup>
@@ -26,44 +31,48 @@
         <tbody>
         <tr>
             <td class="cell-fixed-component">
-                <div class="wrapper-flexible">
+                <div class="wrapper-flexible pad-standard">
                     <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
                         <i class="icon-stack icon-stack-fw">
                             <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
                             <i class="icon icon-fw icon-stack-2x icon-empty"></i>
                         </i>
                     </button>
-                    <div class="table-padded-content"><strong>(R1)</strong> Potassium hydroxide</div>
+                    <div class="table-padded-content table-padded-content_small"><strong>(R1)</strong> Potassium hydroxide</div>
                     <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
                         <i class="icon icon-options"></i>
                     </button>
                 </div>
             </td>
             <td class="cell-limit">
-                <button class="btn-rounded" ng-click="potHasLimit = !potHasLimit">
-                    <i ng-if="potHasLimit" class="icon icon-tick"></i>
-                </button>
+                <div class="pad-standard">
+                    <button class="btn-rounded" ng-click="potHasLimit = !potHasLimit">
+                        <i ng-if="potHasLimit" class="icon icon-tick"></i>
+                    </button>
+                </div>
             </td>
         </tr>
         <tr>
             <td class="cell-fixed-component">
-                <div class="wrapper-flexible">
+                <div class="wrapper-flexible pad-standard">
                     <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
                         <i class="icon-stack icon-stack-fw">
                             <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
                             <i class="icon icon-fw icon-stack-2x icon-empty"></i>
                         </i>
                     </button>
-                    <div class="table-padded-content"><strong>(R2)</strong> Hydrochloric acid</div>
+                    <div class="table-padded-content table-padded-content_small"><strong>(R2)</strong> Hydrochloric acid</div>
                     <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
                         <i class="icon icon-options"></i>
                     </button>
                 </div>
             </td>
             <td class="cell-limit">
-                <button class="btn-rounded" ng-click="hydHasLimit = !hydHasLimit">
-                    <i ng-if="hydHasLimit" class="icon icon-tick"></i>
-                </button>
+                <div class="pad-standard">
+                    <button class="btn-rounded" ng-click="hydHasLimit = !hydHasLimit">
+                        <i ng-if="hydHasLimit" class="icon icon-tick"></i>
+                    </button>
+                </div>
             </td>
         </tr>
         </tbody>
@@ -102,23 +111,86 @@
                 <div class="table-padded-content">KOH</div>
             </td>
             <td class="cell-mw">
-                <div class="table-padded-content">56.106</div>
+                <div class="in-line-editable-wrapper text-right">
+                    <span uib-dropdown dropdown-append-to-body on-toggle="toggled(open)" class="view-element"
+                          buttons="no"
+                          editable-text="data.mw.value"
+                          e-class="in-line-editable text-right"
+                          e-ng-focus="setBehavior($form)">
+                        <span class="editable-dropdown" uib-dropdown-toggle>
+                            {{data.mw.value || '0'}} {{mwUnit}}
+                        </span>
+                        <ul uib-dropdown-menu>
+                            <li ng-repeat="choice in data.mw.units">
+                                <a href ng-click="setUnit('mw', choice)">{{choice}}</a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
             </td>
             <td class="cell-equiv">
                 <div class="table-padded-content">1</div>
             </td>
             <td class="cell-mass">
-                <div class="table-padded-content">5.00 g</div>
+                <div class="in-line-editable-wrapper text-right">
+                    <span uib-dropdown dropdown-append-to-body on-toggle="toggled(open)" class="view-element"
+                          buttons="no"
+                          editable-text="data.mass.value"
+                          e-class="in-line-editable text-right"
+                          e-ng-focus="setBehavior($form)">
+                        <span class="editable-dropdown" id="simple-dropdown" uib-dropdown-toggle>
+                            {{data.mass.value || '0'}} {{massUnit}}
+                        </span>
+                        <ul uib-dropdown-menu aria-labelledby="simple-dropdown">
+                            <li ng-repeat="choice in data.mass.units">
+                                <a href ng-click="setUnit('mass', choice)">{{choice}}</a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
             </td>
             <td class="cell-volume"></td>
             <td class="cell-purity">
-                <div class="table-padded-content">100</div>
+                <div class="table-padded-content">
+
+
+                </div>
             </td>
             <td class="cell-quantifier">
-                <div class="table-padded-content">0.25 g/mL</div>
+                <div class="in-line-editable-wrapper text-right">
+                    <span uib-dropdown dropdown-append-to-body on-toggle="toggled(open)" class="view-element"
+                          buttons="no"
+                          editable-text="data.quantifier.value"
+                          e-class="in-line-editable text-right"
+                          e-ng-focus="setBehavior($form)">
+                        <span class="editable-dropdown" uib-dropdown-toggle>
+                            {{data.quantifier.value || '0'}} {{quantifierUnit}}
+                        </span>
+                        <ul uib-dropdown-menu>
+                            <li ng-repeat="choice in data.quantifier.units">
+                                <a href ng-click="setUnit('quantifier', choice)">{{choice}}</a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
             </td>
             <td class="cell-n">
-                <div class="table-padded-content">19.213 mmol</div>
+                <div class="in-line-editable-wrapper text-right">
+                    <span uib-dropdown dropdown-append-to-body on-toggle="toggled(open)" class="view-element"
+                          buttons="no"
+                          editable-text="data.n.value"
+                          e-class="in-line-editable text-right"
+                          e-ng-focus="setBehavior($form)">
+                        <span class="editable-dropdown" uib-dropdown-toggle>
+                            {{data.n.value || '0'}} {{nUnit}}
+                        </span>
+                        <ul uib-dropdown-menu>
+                            <li ng-repeat="choice in data.n.units">
+                                <a href ng-click="setUnit('n', choice)">{{choice}}</a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
             </td>
             <td class="cell-comment"></td>
         </tr>
@@ -187,5 +259,7 @@
         </thead>
     </table>
 </section>
+
+<script src="script.js"></script>
 </body>
 </html>

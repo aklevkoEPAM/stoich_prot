@@ -55,7 +55,7 @@ body {
       border-top: 4px solid @mainLight80;
       td {
         color: @mainDark20;
-        padding: 5px;
+        padding: 0;
         vertical-align: top;
         .btn-framed-info {
           margin-right: 7px;
@@ -69,7 +69,13 @@ body {
       }
     }
     .table-padded-content {
-      padding: 6px 2px;
+      padding: 11px 7px;
+      &_small {
+        padding: 6px 2px;
+      }
+    }
+    .table-margined-content {
+      margin: 11px 7px;
     }
     .elliptic {
       overflow: hidden;
@@ -104,6 +110,9 @@ body {
   .flex-right {
     margin-left: auto;
   }
+}
+.pad-standard {
+  padding: 5px;
 }
 
 // cell widths and alignment styles
@@ -160,29 +169,40 @@ body {
   min-width: @width;
   width: @width;
 }
+.text-right {
+  text-align: right;
+}
+
+// inline editing cells styles
+.in-line-editable {
+  &-wrapper {
+    height: 40px;
+    .view-element {
+      border: none;
+      display: block;
+      height: 100%;
+    }
+    .editable-dropdown {
+      display: block;
+      height: 100%;
+      padding: 11px 7px;
+      width: 100%;
+    }
+    .editable-wrap {
+      .editable-controls > input {
+        background-color: @blueLight80;
+        border: none;
+        outline: 1px solid @mainDark20;
+        height: 40px;
+        padding: 0 7px;
+        width: 100%;
+      }
+    }
+  }
+}
+
 
 // buttons
-.btn {
-  -moz-user-select: none;
-  -ms-touch-action: manipulation;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-  background-image: none;
-  border-radius: 4px;
-  border: 1px solid #0000;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.42857143;
-  margin-bottom: 0;
-  padding: 6px 12px;
-  text-align: center;
-  touch-action: manipulation;
-  user-select: none;
-  vertical-align: middle;
-  white-space: nowrap;
-}
 
 .btn-framed {
   background: rgba(0, 0, 0, 0.02);
