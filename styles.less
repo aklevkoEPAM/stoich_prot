@@ -41,9 +41,14 @@ body {
         color: @main;
         font: 500 13px/26px @font-roboto;
         padding-top: 3px;
+        white-space: nowrap;
         em {
           font-weight: normal;
           font-style: normal
+        }
+        small {
+          font-size: 11px;
+          font-weight: normal;
         }
         button {
           border: 0;
@@ -134,6 +139,9 @@ body {
   }
   &-formula {
     .width-with-minwidth(180px);
+    .stoich-section_products & {
+      .width-with-minwidth(227px);
+    }
   }
   &-mw {
     .width-with-minwidth(86px);
@@ -159,6 +167,22 @@ body {
   &-comment {
     .width-with-minwidth(140px);
   }
+  &-mass-exp {
+    .width-with-minwidth(110px);
+  }
+  &-mass-act {
+    .width-with-minwidth(90px);
+  }
+  &-n-exp {
+    .width-with-minwidth(80px);
+  }
+  &-n-act {
+    .width-with-minwidth(140px);
+  }
+  &-yield {
+    .width-with-minwidth(115px);
+  }
+
 }
 
 .stoich-section__table .cell {
@@ -242,7 +266,9 @@ body {
 }
 
 // buttons
-
+.btn {
+  outline: none !important;
+}
 .btn-framed {
   background: rgba(0, 0, 0, 0.02);
   color: @blueDark40;
