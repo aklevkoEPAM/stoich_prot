@@ -6,7 +6,7 @@
 
     <link href="vendor/angular-xeditable/css/xeditable.css" rel="stylesheet">
     <script src="vendor/angular-xeditable/js/xeditable.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet/less" type="text/css" href="styles.less"/>
     <script src="vendor/less/less.min.js"></script>
 
@@ -14,7 +14,7 @@
 </head>
 <body ng-controller="controller">
 <section class="stoich-section stoich-section_reactants">
-    <table class="stoich-section__table stoich-section__table_sticky">
+    <table class="stoich-section__table stoich-section__table_sticky layout-type-short">
         <colgroup>
             <col class="cell-fixed-component">
             <col class="cell-limit">
@@ -31,17 +31,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="stickyRow in stickyRows">
+        <tr ng-repeat="stickyRow in stickyRows track by $index">
             <td class="cell-fixed-component">
-                <div class="wrapper-flexible pad-standard">
+                <div class="wrapper-flexible">
                     <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
                         <i class="icon-stack icon-stack-fw">
                             <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
                             <i class="icon icon-fw icon-stack-2x icon-empty"></i>
                         </i>
                     </button>
-                    <div class="table-padded-content table-padded-content_small">
-                        <strong>{{stickyRow.prefix}}</strong> {{stickyRow.name}}
+                    <div class="in-line-editable-wrapper">
+                        <strong class="component-prefix">(R{{$index+1}})</strong>
+                        <inline-editing-directive component-data="stickyRow"></inline-editing-directive>
                     </div>
                     <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
                         <i class="icon icon-options"></i>
@@ -58,7 +59,7 @@
         </tr>
         </tbody>
     </table>
-    <table class="stoich-section__table">
+    <table class="stoich-section__table layout-type-short">
         <!--this colgroup is a must to make the table static-->
         <colgroup>
             <col class="cell-formula">
@@ -89,7 +90,7 @@
         <tbody>
         <tr ng-repeat="bodyRow in bodyRows">
             <td class="cell-formula">
-                <div class="in-line-editable-wrapper text-right">
+                <div class="in-line-editable-wrapper">
                     <inline-editing-directive component-data="bodyRow.formula"></inline-editing-directive>
                 </div>
             </td>
@@ -120,15 +121,19 @@
             </td>
             <td class="cell-quantifier">
                 <div class="in-line-editable-wrapper text-right">
-                    <inline-editing-directive component-data="bodyRow.n"></inline-editing-directive>
+                    <inline-editing-directive component-data="bodyRow.quantifier"></inline-editing-directive>
                 </div>
             </td>
             <td class="cell-n">
                 <div class="in-line-editable-wrapper text-right">
-                    <inline-editing-directive component-data="bodyRow.quantifier"></inline-editing-directive>
+                    <inline-editing-directive component-data="bodyRow.n"></inline-editing-directive>
                 </div>
             </td>
-            <td class="cell-comment"></td>
+            <td class="cell-comment">
+                <div class="in-line-editable-wrapper">
+                    <inline-editing-directive component-data="bodyRow.comment"></inline-editing-directive>
+                </div>
+            </td>
         </tr>
 
         </tbody>

@@ -10,12 +10,10 @@
   function controller($scope) {
     $scope.stickyRows = [
       {
-        prefix: 'R1',
-        name: 'Potassium hydroxide'
+        value: 'Potassium hydroxide'
       },
       {
-        prefix: 'R2',
-        name: 'Hydrochloric acid'
+        value: 'Hydrochloric acid'
       }
     ];
     $scope.bodyRows = [
@@ -87,8 +85,7 @@
 
     $scope.addNew = function () {
       var newStickyRow = {
-        prefix: 'R1',
-        name: ''
+        value: ''
       };
       var newBodyRow = {
         formula: {
@@ -115,7 +112,7 @@
           units: ['g/mL', 'g/L', 'kg/L']
         },
         n: {
-          value: 19.213,
+          value: null,
           units: ['mol', 'mmol']
         },
         comment: {
@@ -152,7 +149,7 @@
       setBehavior: setBehavior,
       toggled: toggled,
       toggleDropdown: toggleDropdown,
-      unit: undefined,
+      unit: $scope.componentData.units ? $scope.componentData.units[0]: undefined,
       status: {
         isopen: false
       }

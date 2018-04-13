@@ -23,6 +23,12 @@ body {
     &_sticky {
       flex-shrink: 0;
       overflow-x: hidden;
+      td {
+        .component-prefix {
+          margin-left: 2px;
+          padding-top: 10px;
+        }
+      }
     }
     td {
       border-right: 2px solid @mainLight85;
@@ -127,8 +133,7 @@ body {
     .width-with-minwidth(46px);
   }
   &-formula {
-    min-width: 180px;
-    //.width-with-minwidth(180px);
+    .width-with-minwidth(180px);
   }
   &-mw {
     .width-with-minwidth(86px);
@@ -137,7 +142,7 @@ body {
     .width-with-minwidth(79px);
   }
   &-mass {
-    .width-with-minwidth(67px);
+    .width-with-minwidth(70px);
   }
   &-volume {
     .width-with-minwidth(86px);
@@ -153,6 +158,20 @@ body {
   }
   &-comment {
     .width-with-minwidth(140px);
+  }
+}
+
+.stoich-section__table .cell {
+  &-fixed-component {
+    .btn-framed {
+      margin: 5px;
+      &.flex-right {
+        margin-left: auto;
+      }
+    }
+    .in-line-editable-wrapper {
+
+    }
   }
 }
 
@@ -178,12 +197,22 @@ body {
 
 // inline editing cells styles
 .in-line-editable {
+  .text-right & {
+    text-align: right;
+  }
   &-wrapper {
     height: 40px;
+    .stoich-section__table_sticky .wrapper-flexible & {
+      display: flex;
+      flex-grow: 1;
+    }
     .view-element {
       border: none;
       display: block;
       height: 100%;
+      .stoich-section__table_sticky & {
+        width: 232px;
+      }
     }
     .editable-dropdown {
       display: block;
@@ -191,12 +220,19 @@ body {
       padding: 11px 7px;
       width: 100%;
     }
+    .editable-click {
+      color: @main;
+    }
     .editable-wrap {
+      display: block;
+      .stoich-section__table_sticky & {
+        flex-grow: 1;
+        width: 225px;
+      }
       .editable-controls > input {
         background-color: @blueLight80;
         border: none;
         outline: 1px solid @mainDark20;
-        outline-offset: 0.5px;
         height: 40px;
         padding: 0 7px 1px;
         width: 100%;
@@ -338,7 +374,7 @@ body {
   border: 0;
   border-radius: 0;
   box-shadow: 0 0 10px 0 rgba(67, 74, 84, 0.5);
-  margin-left: 1px;
+  margin: -1px 0 0 1px;
   padding: 0;
   > li {
     border-bottom: 1px solid @mainLight90;
@@ -354,5 +390,23 @@ body {
     &:last-of-type {
       border-bottom: none;
     }
+  }
+}
+
+// layout types
+.layout-type {
+  &-short {
+    .in-line-editable-wrapper {
+      width: inherit;
+    }
+    .value-container {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: inherit;
+    }
+  }
+  &-full {
+
   }
 }
