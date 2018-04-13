@@ -333,7 +333,7 @@
             value: null,
             units: ['mol', 'mmol']
           },
-          Yield: {
+          yield: {
             value: null
           }
         }
