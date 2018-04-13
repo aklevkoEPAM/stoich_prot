@@ -1,0 +1,178 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/angular-ui/ui-bootstrap-tpls-1.0.2.js"></script>
+
+    <link href="vendor/angular-xeditable/css/xeditable.css" rel="stylesheet">
+    <script src="vendor/angular-xeditable/js/xeditable.js"></script>
+    <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="styles.less"/>
+    <script src="vendor/less/less.min.js"></script>
+
+    <script src="script.js"></script>
+</head>
+<body ng-controller="controller">
+<section class="stoich-section stoich-section_reactants">
+    <table class="stoich-section__table stoich-section__table_sticky layout-type-short">
+        <colgroup>
+            <col class="cell-fixed-component">
+            <col class="cell-limit">
+        </colgroup>
+        <thead>
+        <tr>
+            <td class="cell-fixed-component colorized">Reactants
+                <button class="btn btn-clean right" ng-click="addNew()">
+                    <i class="icon icon-plus"></i>
+                    Add new
+                </button>
+            </td>
+            <td class="cell-limit">Limit</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="stickyRow in stickyRows track by $index">
+            <td class="cell-fixed-component">
+                <div class="wrapper-flexible">
+                    <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
+                        <i class="icon-stack icon-stack-fw">
+                            <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
+                            <i class="icon icon-fw icon-stack-2x icon-empty"></i>
+                        </i>
+                    </button>
+                    <div class="in-line-editable-wrapper">
+                        <strong class="component-prefix">(R{{$index+1}})</strong>
+                        <inline-editing-directive component-data="stickyRow"></inline-editing-directive>
+                    </div>
+                    <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
+                        <i class="icon icon-options"></i>
+                    </button>
+                </div>
+            </td>
+            <td class="cell-limit">
+                <div class="pad-standard">
+                    <button class="btn-rounded" ng-click="potHasLimit = !potHasLimit">
+                        <i ng-if="potHasLimit" class="icon icon-tick"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="stoich-section__table layout-type-short">
+        <!--this colgroup is a must to make the table static-->
+        <colgroup>
+            <col class="cell-formula">
+            <col class="cell-mw">
+            <col class="cell-equiv">
+            <col class="cell-mass">
+            <col class="cell-volume">
+            <col class="cell-purity">
+            <col class="cell-quantifier">
+            <col class="cell-n">
+            <col class="cell-comment">
+        </colgroup>
+        <thead>
+        <tr>
+            <td class="cell-formula">Formula</td>
+            <td class="cell-mw">MW <em>(g/mol)</em></td>
+            <td class="cell-equiv">Equiv.
+                <button class="icon icon-lock_closed"></button>
+            </td>
+            <td class="cell-mass">Mass</td>
+            <td class="cell-volume">Volume</td>
+            <td class="cell-purity">Purity <em>(%)</em></td>
+            <td class="cell-quantifier">Quantifier</td>
+            <td class="cell-n">n</td>
+            <td class="cell-comment">Comment</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="bodyRow in bodyRows">
+            <td class="cell-formula">
+                <div class="in-line-editable-wrapper">
+                    <inline-editing-directive component-data="bodyRow.formula"></inline-editing-directive>
+                </div>
+            </td>
+            <td class="cell-mw">
+                <div class="in-line-editable-wrapper text-right">
+                    <inline-editing-directive component-data="bodyRow.mw"></inline-editing-directive>
+                </div>
+            </td>
+            <td class="cell-equiv">
+                <div class="in-line-editable-wrapper text-right">
+                    <inline-editing-directive component-data="bodyRow.equiv"></inline-editing-directive>
+                </div>
+            </td>
+            <td class="cell-mass">
+                <div class="in-line-editable-wrapper text-right">
+                    <inline-editing-directive component-data="bodyRow.mass"></inline-editing-directive>
+                </div>
+            </td>
+            <td class="cell-volume">
+                <div class="in-line-editable-wrapper text-right">
+                    <inline-editing-directive component-data="bodyRow.volume"></inline-editing-directive>
+                </div>
+            </td>
+            <td class="cell-purity">
+                <div class="in-line-editable-wrapper text-right">
+                    <inline-editing-directive component-data="bodyRow.purity"></inline-editing-directive>
+                </div>
+            </td>
+            <td class="cell-quantifier">
+                <div class="in-line-editable-wrapper text-right">
+                    <inline-editing-directive component-data="bodyRow.quantifier"></inline-editing-directive>
+                </div>
+            </td>
+            <td class="cell-n">
+                <div class="in-line-editable-wrapper text-right">
+                    <inline-editing-directive component-data="bodyRow.n"></inline-editing-directive>
+                </div>
+            </td>
+            <td class="cell-comment">
+                <div class="in-line-editable-wrapper">
+                    <inline-editing-directive component-data="bodyRow.comment"></inline-editing-directive>
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</section>
+
+<section class="stoich-section stoich-section_agents">
+    <table class="stoich-section__table">
+        <thead>
+        <tr>
+            <td class="width-fixed-component">Agents
+                <button class="btn btn-clean right">
+                    <i class="icon icon-plus"></i>
+                    Add new
+                </button>
+            </td>
+            <td></td>
+        </tr>
+        </thead>
+    </table>
+</section>
+
+
+<section class="stoich-section stoich-section_products">
+    <table class="stoich-section__table">
+        <thead>
+        <tr>
+            <td class="width-fixed-component">Products
+                <button class="btn btn-clean right">
+                    <i class="icon icon-plus"></i>
+                    Add new
+                </button>
+            </td>
+            <td></td>
+        </tr>
+        </thead>
+    </table>
+</section>
+
+
+</body>
+</html>
