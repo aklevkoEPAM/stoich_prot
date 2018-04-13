@@ -111,6 +111,7 @@ body {
     margin-left: auto;
   }
 }
+
 .pad-standard {
   padding: 5px;
 }
@@ -165,10 +166,12 @@ body {
     }
   }
 }
+
 .width-with-minwidth(@width) {
   min-width: @width;
   width: @width;
 }
+
 .text-right {
   text-align: right;
 }
@@ -193,14 +196,14 @@ body {
         background-color: @blueLight80;
         border: none;
         outline: 1px solid @mainDark20;
+        outline-offset: 0.5px;
         height: 40px;
-        padding: 0 7px;
+        padding: 0 7px 1px;
         width: 100%;
       }
     }
   }
 }
-
 
 // buttons
 
@@ -327,6 +330,29 @@ body {
     color: @blueDark40;
     .icon {
       color: @blueDark20;
+    }
+  }
+}
+
+.dropdown-menu {
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 0 10px 0 rgba(67, 74, 84, 0.5);
+  margin-left: 1px;
+  padding: 0;
+  > li {
+    border-bottom: 1px solid @mainLight90;
+    height: 35px;
+    > a {
+      font-size: 13px;
+      padding: 8px 20px;
+      &:hover {
+        background: linear-gradient(180deg, rgba(240, 245, 255, 0.5) 0%, rgba(220, 232, 255, 0.5) 100%);
+        color: @blueDark20;
+      }
+    }
+    &:last-of-type {
+      border-bottom: none;
     }
   }
 }

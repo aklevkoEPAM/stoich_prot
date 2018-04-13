@@ -1,123 +1,212 @@
-// var app = angular.module('app', ['xeditable']);
-//
-// app.controller('Ctrl', function($scope) {
-//     $scope.user = {
-//         name: 'awesome user'
-//     }
-// });
+(function (angular) {
+  'use strict';
 
+  angular
+      .module('app', ['xeditable', 'ui.bootstrap'])
+      .controller('controller', controller)
+      .directive('inlineEditingDirective', InlineEditingDirective)
+      .controller('InlineEditingController', InlineEditingController);
 
-var app = angular.module('app', ['xeditable', 'ui.bootstrap']);
-
-app.controller('controller', controller);
-
-//controller.$inject = ['$scope'];
-
-
-function controller($scope) {
-    var editableLElementWrapper;
-
-    $scope.data = {
+  function controller($scope) {
+    $scope.stickyRows = [
+      {
+        prefix: 'R1',
+        name: 'Potassium hydroxide'
+      },
+      {
+        prefix: 'R2',
+        name: 'Hydrochloric acid'
+      }
+    ];
+    $scope.bodyRows = [
+      {
+        formula: {
+          value: 'KOH'
+        },
         mw: {
-            value: 25,
-            units: ['g/mol', 'mg/mol']
+          value: 56.106
+        },
+        equiv: {
+          value: 1
         },
         mass: {
-            value: 5,
-            units: ['mg', 'g', 'kg']
+          value: 5.00,
+          units: ['mg', 'g', 'kg']
+        },
+        volume: {
+          value: 6
+        },
+        purity: {
+          value: 100
         },
         quantifier: {
-            value: 0.25,
-            units: ['g/mL', 'g/L', 'kg/L']
+          value: 0.25,
+          units: ['g/mL', 'g/L', 'kg/L']
         },
         n: {
-            value: 19.213,
-            units: ['mol', 'mmol']
+          value: 19.213,
+          units: ['mol', 'mmol']
+        },
+        comment: {
+          value: ''
         }
-    };
-    $scope.mwunit= 'mol';
-
-    $scope.setBehavior = function (form) {
-        console.log(form);
-        var editableElement = form.$editables[0].inputEl[0];
-        editableElement.selectionStart = editableElement.selectionStop = editableElement.value.length;
-
-
-        editableLElementWrapper = form.$editables[0].inputEl;
-        editableLElementWrapper
-            .on('blur', blurEventHandler);
-        // .on('keydown', keyDownHandler)
-        // .on('keyup', disableOtherEditableElementsOnKeyUp);
-
-
-        function blurEventHandler() {
-            form.$editables[0].scope.$apply(function () {
-                form.$submit();
-            });
+      },
+      {
+        formula: {
+          value: 'HCl'
+        },
+        mw: {
+          value: 36.461
+        },
+        equiv: {
+          value: 1
+        },
+        mass: {
+          value: 3.249,
+          units: ['mg', 'g', 'kg']
+        },
+        volume: {
+          value: 4
+        },
+        purity: {
+          value: 100
+        },
+        quantifier: {
+          value: 0.25,
+          units: ['g/mL', 'g/L', 'kg/L']
+        },
+        n: {
+          value: 19.213,
+          units: ['mol', 'mmol']
+        },
+        comment: {
+          value: 'This is a long-long-long comment'
         }
+      }
+    ];
 
-        // function keyDownHandler(keyDownEvent) {
-        //   switch (keyDownEvent.which) {
-        //     case keyCodes.Enter:
-        //       keyDownEvent.preventDefault();
-        //       editableElement.blur();
-        //       break;
-        //   }
-        // }
+    $scope.addNew = function () {
+      var newStickyRow = {
+        prefix: 'R1',
+        name: ''
+      };
+      var newBodyRow = {
+        formula: {
+          value: ''
+        },
+        mw: {
+          value: null
+        },
+        equiv: {
+          value: null
+        },
+        mass: {
+          value: null,
+          units: ['mg', 'g', 'kg']
+        },
+        volume: {
+          value: null
+        },
+        purity: {
+          value: null
+        },
+        quantifier: {
+          value: null,
+          units: ['g/mL', 'g/L', 'kg/L']
+        },
+        n: {
+          value: 19.213,
+          units: ['mol', 'mmol']
+        },
+        comment: {
+          value: ''
+        }
+      };
 
-        // function disableOtherEditableElementsOnKeyUp(keyUpEvent) {
-        //   if (keyUpEvent.which !== keyCodes.Enter
-        //     && keyUpEvent.which !== keyCodes.Tab
-        //     && keyUpEvent.which !== keyCodes.Escape) {
-        //     vm.disabledEdit(!(validationPatterns.numeric.test(editableLElementWrapper.val().trim())
-        //       || !editableLElementWrapper.val().length));
-        //   }
-        // }
+      $scope.stickyRows.push(newStickyRow);
+      $scope.bodyRows.push(newBodyRow);
     };
 
-    $scope.status = {
+  }
+
+  function InlineEditingDirective() {
+    return {
+      restrict: "E",
+      scope: {
+        componentData: '='
+      },
+      controllerAs: "vm",
+      controller: "InlineEditingController",
+      templateUrl: "directives/inlineEditing.html"
+    };
+  }
+
+  InlineEditingController.$inject = ['$scope'];
+
+  function InlineEditingController($scope) {
+    var vm = this,
+        editableElementWrapper;
+
+    angular.extend(vm, {
+      setUnit: setUnit,
+      setBehavior: setBehavior,
+      toggled: toggled,
+      toggleDropdown: toggleDropdown,
+      unit: undefined,
+      status: {
         isopen: false
-    };
+      }
+    });
 
-    $scope.toggled = function (open) {
-
-    };
-
-    $scope.toggleDropdown = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        $scope.status.isopen = !$scope.status.isopen;
-    };
-
-    // $scope.unit = 'kg';
-    // $scope.setUnit = function (unit) {
-    //    $scope.unit = unit;
-    // };
-
-    $scope.massUnit = 'kg';
-    $scope.mwUnit = 'mol';
-    $scope.quantifierUnit = 'g/mL';
-    $scope.nUnit = 'mmol';
-
-    $scope.setUnit = function (entity, choice) {
-        switch (entity) {
-            case 'mw':
-                $scope.mwUnit = choice;
-                break;
-            case 'mass':
-                $scope.massUnit = choice;
-                break;
-            case 'quantifier':
-                $scope.quantifierUnit = choice;
-            break;
-            case 'n':
-                $scope.nUnit = choice;
-            break;
-            default:
-                break;
-        }
+    function setUnit(choice) {
+      vm.unit = choice;
     }
 
-}
+    function setBehavior(form) {
+      var editableElement = form.$editables[0].inputEl[0];
+      editableElement.selectionStart = editableElement.selectionStop = editableElement.value.length;
 
 
+      editableElementWrapper = form.$editables[0].inputEl;
+      editableElementWrapper
+          .on('blur', blurEventHandler);
+      // .on('keydown', keyDownHandler)
+      // .on('keyup', disableOtherEditableElementsOnKeyUp);
+
+
+      function blurEventHandler() {
+        form.$editables[0].scope.$apply(function () {
+          form.$submit();
+        });
+      }
+
+      // function keyDownHandler(keyDownEvent) {
+      //   switch (keyDownEvent.which) {
+      //     case keyCodes.Enter:
+      //       keyDownEvent.preventDefault();
+      //       editableElement.blur();
+      //       break;
+      //   }
+      // }
+
+      // function disableOtherEditableElementsOnKeyUp(keyUpEvent) {
+      //   if (keyUpEvent.which !== keyCodes.Enter
+      //     && keyUpEvent.which !== keyCodes.Tab
+      //     && keyUpEvent.which !== keyCodes.Escape) {
+      //     vm.disabledEdit(!(validationPatterns.numeric.test(editableLElementWrapper.val().trim())
+      //       || !editableLElementWrapper.val().length));
+      //   }
+      // }
+    }
+
+    function toggled(open) {
+    }
+
+    function toggleDropdown($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      $scope.status.isopen = !$scope.status.isopen;
+    }
+
+  }
+})(window.angular);

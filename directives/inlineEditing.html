@@ -1,0 +1,14 @@
+<span uib-dropdown dropdown-append-to-body on-toggle="vm.toggled(open)" class="view-element"
+      buttons="no"
+      editable-text="componentData.value"
+      e-class="in-line-editable text-right"
+      e-ng-focus="vm.setBehavior($form)">
+    <span class="editable-dropdown" uib-dropdown-toggle>
+        {{componentData.value || '0'}} {{vm.unit}}
+    </span>
+    <ul uib-dropdown-menu>
+        <li ng-repeat="choice in componentData.units">
+            <a href ng-click="vm.setUnit(choice)">{{choice}}</a>
+        </li>
+    </ul>
+</span>
