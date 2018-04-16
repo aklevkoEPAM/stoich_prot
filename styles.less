@@ -49,6 +49,7 @@ body {
         small {
           font-size: 11px;
           font-weight: normal;
+          font: normal 11px/25px @font-roboto; //different line-height to fix a "small" tag issue (increase height of the cell without a particular reason
         }
         button {
           border: 0;
@@ -139,8 +140,8 @@ body {
   }
   &-formula {
     .width-with-minwidth(180px);
-    .stoich-section_products & {
-      .width-with-minwidth(227px);
+    .no-sticky-limit & {
+      .width-with-minwidth(226px);
     }
   }
   &-mw {

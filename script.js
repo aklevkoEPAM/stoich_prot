@@ -16,7 +16,6 @@
         {
           value: 'Hydrochloric acid'
         }
-
       ],
       body: [
         {
@@ -162,73 +161,6 @@
         }]
       };
 
-    // $scope.bodyRows = [
-    //   {
-    //     formula: {
-    //       value: 'KOH'
-    //     },
-    //     mw: {
-    //       value: 56.106
-    //     },
-    //     equiv: {
-    //       value: 1
-    //     },
-    //     mass: {
-    //       value: 5.00,
-    //       units: ['mg', 'g', 'kg']
-    //     },
-    //     volume: {
-    //       value: 6
-    //     },
-    //     purity: {
-    //       value: 100
-    //     },
-    //     quantifier: {
-    //       value: 0.25,
-    //       units: ['g/mL', 'g/L', 'kg/L']
-    //     },
-    //     n: {
-    //       value: 19.213,
-    //       units: ['mol', 'mmol']
-    //     },
-    //     comment: {
-    //       value: ''
-    //     }
-    //   },
-    //   {
-    //     formula: {
-    //       value: 'HCl'
-    //     },
-    //     mw: {
-    //       value: 36.461
-    //     },
-    //     equiv: {
-    //       value: 1
-    //     },
-    //     mass: {
-    //       value: 3.249,
-    //       units: ['mg', 'g', 'kg']
-    //     },
-    //     volume: {
-    //       value: 4
-    //     },
-    //     purity: {
-    //       value: 100
-    //     },
-    //     quantifier: {
-    //       value: 0.25,
-    //       units: ['g/mL', 'g/L', 'kg/L']
-    //     },
-    //     n: {
-    //       value: 19.213,
-    //       units: ['mol', 'mmol']
-    //     },
-    //     comment: {
-    //       value: 'This is a long-long-long comment'
-    //     }
-    //   }
-    // ];
-
     var reactantRowsPlaceholder = {
       newStickyRow: {
         value: ''
@@ -306,7 +238,7 @@
         }
       };
 
-      var agentRowsPlaceholder = {
+      var productRowsPlaceholder = {
         newStickyRow: {
           value: ''
         },
@@ -341,9 +273,9 @@
       if (type === 'reactant') {
         arr.sticky.push(reactantRowsPlaceholder.newStickyRow);
         arr.body.push(reactantRowsPlaceholder.newBodyRow);
-      } else if (type === 'agent') {
-        arr.sticky.push(agentRowsPlaceholder.newStickyRow);
-        arr.body.push(agentRowsPlaceholder.newBodyRow);
+      } else if (type === 'product') {
+        arr.sticky.push(productRowsPlaceholder.newStickyRow);
+        arr.body.push(productRowsPlaceholder.newBodyRow);
       }
     };
 
