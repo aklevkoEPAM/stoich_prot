@@ -42,6 +42,15 @@ body {
         font: 500 13px/26px @font-roboto;
         padding-top: 3px;
         white-space: nowrap;
+        span {
+          text-transform: capitalize;
+          &.text-uppercase {
+            text-transform: uppercase;
+          }
+          &.text-lowercase {
+            text-transform: lowercase;
+          }
+        }
         em {
           font-weight: normal;
           font-style: normal
@@ -207,6 +216,7 @@ body {
     td.colorized {
       background: linear-gradient(to right, @gradient-start, @mainLight95);
       border-left: 3px solid @border;
+      text-transform: capitalize;
     }
   }
 }
@@ -218,6 +228,10 @@ body {
 
 .text-right {
   text-align: right;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
 }
 
 // inline editing cells styles
@@ -236,7 +250,7 @@ body {
       display: block;
       height: 100%;
       .stoich-section__table_sticky & {
-        width: 232px;
+        width: 212px;
       }
     }
     .editable-dropdown {
@@ -252,7 +266,8 @@ body {
       display: block;
       .stoich-section__table_sticky & {
         flex-grow: 1;
-        width: 225px;
+        padding-right: 5px;
+        width: 212px;
       }
       .editable-controls > input {
         background-color: @blueLight80;

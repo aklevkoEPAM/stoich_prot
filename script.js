@@ -1,14 +1,19 @@
-(function (angular) {
+(function () {
   'use strict';
 
   angular
-      .module('app', ['xeditable', 'ui.bootstrap'])
-      .controller('controller', controller)
-      .directive('inlineEditingDirective', InlineEditingDirective)
-      .controller('InlineEditingController', InlineEditingController);
+      .module('app', ['inlineEditing', 'stoichSection'])
+      .controller('appController', appController);
 
-  function controller($scope) {
+  appController.$inject = ['$scope'];
+
+  function appController($scope) {
     $scope.reactantRows = {
+      metaInfo: {
+        name: 'reactant',
+        prefix: 'R',
+        type: 'reactantType' //need to
+      },
       sticky: [
         {
           value: 'Potassium hydroxide'
@@ -23,28 +28,52 @@
             value: 'KOH'
           },
           mw: {
-            value: 56.106
+            value: 56.106,
+            headUnits: 'g/mol',
+            style: {
+              headClasses: ['text-uppercase'],
+              classes: ['text-right']
+            }
           },
           equiv: {
-            value: 1
+            value: 1,
+            style: {
+              classes: ['text-right']
+            }
           },
           mass: {
             value: 5.00,
-            units: ['mg', 'g', 'kg']
+            units: ['mg', 'g', 'kg'],
+            style: {
+              classes: ['text-right']
+            }
           },
           volume: {
-            value: 6
+            value: 6,
+            style: {
+              classes: ['text-right']
+            }
           },
           purity: {
-            value: 100
+            value: 100,
+            style: {
+              classes: ['text-right']
+            }
           },
           quantifier: {
             value: 0.25,
-            units: ['g/mL', 'g/L', 'kg/L']
+            units: ['g/mL', 'g/L', 'kg/L'],
+            style: {
+              classes: ['text-right']
+            }
           },
           n: {
             value: 19.213,
-            units: ['mol', 'mmol']
+            units: ['mol', 'mmol'],
+            style: {
+              headClasses: ['text-lowercase'],
+              classes: ['text-right']
+            }
           },
           comment: {
             value: ''
@@ -55,28 +84,49 @@
             value: 'HCl'
           },
           mw: {
-            value: 36.461
+            value: 36.461,
+            style: {
+              classes: ['text-right']
+            }
           },
           equiv: {
-            value: 1
+            value: 1,
+            style: {
+              classes: ['text-right']
+            }
           },
           mass: {
             value: 3.249,
-            units: ['mg', 'g', 'kg']
+            units: ['mg', 'g', 'kg'],
+            style: {
+              classes: ['text-right']
+            }
           },
           volume: {
-            value: 4
+            value: 4,
+            style: {
+              classes: ['text-right']
+            }
           },
           purity: {
-            value: 100
+            value: 100,
+            style: {
+              classes: ['text-right']
+            }
           },
           quantifier: {
             value: 0.25,
-            units: ['g/mL', 'g/L', 'kg/L']
+            units: ['g/mL', 'g/L', 'kg/L'],
+            style: {
+              classes: ['text-right']
+            }
           },
           n: {
             value: 19.213,
-            units: ['mol', 'mmol']
+            units: ['mol', 'mmol'],
+            style: {
+              classes: ['text-right']
+            }
           },
           comment: {
             value: 'This is a long-long-long comment'
@@ -129,236 +179,37 @@
     };
 
     $scope.productRows = {
-        sticky: [{
-          value: 'Very long name of the product, very-very looong'
-        }],
-        body: [{
-          formula: {
-            value: 'HF'
-          },
-          massExp: {
-            value: 25,
-            units: ['mg', 'g', 'kg']
-          },
-          massAct: {
-            value: 4.6,
-            units: ['mg', 'g', 'kg']
-          },
-          purity: {
-            value: 86
-          },
-          nExp: {
-            value: 1.2,
-            units: ['mol', 'mmol']
-          },
-          nAct: {
-            value: 1.1,
-            units: ['mol', 'mmol']
-          },
-          yield: {
-            value: 12
-          }
-        }]
-      };
-
-    var reactantRowsPlaceholder = {
-      newStickyRow: {
-        value: ''
-      },
-      newBodyRow: {
+      sticky: [{
+        value: 'Very long name of the product, very-very looong'
+      }],
+      body: [{
         formula: {
-          value: ''
+          value: 'HF'
         },
-        mw: {
-          value: null
-        },
-        equiv: {
-          value: null
-        },
-        mass: {
-          value: null,
+        massExp: {
+          value: 25,
           units: ['mg', 'g', 'kg']
         },
-        volume: {
-          value: null
+        massAct: {
+          value: 4.6,
+          units: ['mg', 'g', 'kg']
         },
         purity: {
-          value: null
+          value: 86
         },
-        quantifier: {
-          value: null,
-          units: ['g/mL', 'g/L', 'kg/L']
-        },
-        n: {
-          value: null,
+        nExp: {
+          value: 1.2,
           units: ['mol', 'mmol']
         },
-        comment: {
-          value: ''
-        }
-      }
-    };
-
-    $scope.addNew = function (arr, type) {
-      var reactantRowsPlaceholder = {
-        newStickyRow: {
-          value: ''
+        nAct: {
+          value: 1.1,
+          units: ['mol', 'mmol']
         },
-        newBodyRow: {
-          formula: {
-            value: ''
-          },
-          mw: {
-            value: null
-          },
-          equiv: {
-            value: null
-          },
-          mass: {
-            value: null,
-            units: ['mg', 'g', 'kg']
-          },
-          volume: {
-            value: null
-          },
-          purity: {
-            value: null
-          },
-          quantifier: {
-            value: null,
-            units: ['g/mL', 'g/L', 'kg/L']
-          },
-          n: {
-            value: null,
-            units: ['mol', 'mmol']
-          },
-          comment: {
-            value: ''
-          }
+        yield: {
+          value: 12
         }
-      };
-
-      var productRowsPlaceholder = {
-        newStickyRow: {
-          value: ''
-        },
-        newBodyRow: {
-          formula: {
-            value: ''
-          },
-          massExp: {
-            value: null,
-            units: ['mg', 'g', 'kg']
-          },
-          massAct: {
-            value: null,
-            units: ['mg', 'g', 'kg']
-          },
-          purity: {
-            value: null
-          },
-          nExp: {
-            value: null,
-            units: ['mol', 'mmol']
-          },
-          nAct: {
-            value: null,
-            units: ['mol', 'mmol']
-          },
-          yield: {
-            value: ''
-          }
-        }
-      };
-      if (type === 'reactant') {
-        arr.sticky.push(reactantRowsPlaceholder.newStickyRow);
-        arr.body.push(reactantRowsPlaceholder.newBodyRow);
-      } else if (type === 'product') {
-        arr.sticky.push(productRowsPlaceholder.newStickyRow);
-        arr.body.push(productRowsPlaceholder.newBodyRow);
-      }
-    };
-
-  }
-
-  function InlineEditingDirective() {
-    return {
-      restrict: "E",
-      scope: {
-        componentData: '='
-      },
-      controllerAs: "vm",
-      controller: "InlineEditingController",
-      templateUrl: "directives/inlineEditing.html"
+      }]
     };
   }
 
-  InlineEditingController.$inject = ['$scope'];
-
-  function InlineEditingController($scope) {
-    var vm = this,
-        editableElementWrapper;
-
-    angular.extend(vm, {
-      setUnit: setUnit,
-      setBehavior: setBehavior,
-      toggled: toggled,
-      toggleDropdown: toggleDropdown,
-      unit: $scope.componentData.units ? $scope.componentData.units[0] : undefined,
-      status: {
-        isopen: false
-      }
-    });
-
-    function setUnit(choice) {
-      vm.unit = choice;
-    }
-
-    function setBehavior(form) {
-      var editableElement = form.$editables[0].inputEl[0];
-      editableElement.selectionStart = editableElement.selectionStop = editableElement.value.length;
-
-
-      editableElementWrapper = form.$editables[0].inputEl;
-      editableElementWrapper
-          .on('blur', blurEventHandler);
-      // .on('keydown', keyDownHandler)
-      // .on('keyup', disableOtherEditableElementsOnKeyUp);
-
-
-      function blurEventHandler() {
-        form.$editables[0].scope.$apply(function () {
-          form.$submit();
-        });
-      }
-
-      // function keyDownHandler(keyDownEvent) {
-      //   switch (keyDownEvent.which) {
-      //     case keyCodes.Enter:
-      //       keyDownEvent.preventDefault();
-      //       editableElement.blur();
-      //       break;
-      //   }
-      // }
-
-      // function disableOtherEditableElementsOnKeyUp(keyUpEvent) {
-      //   if (keyUpEvent.which !== keyCodes.Enter
-      //     && keyUpEvent.which !== keyCodes.Tab
-      //     && keyUpEvent.which !== keyCodes.Escape) {
-      //     vm.disabledEdit(!(validationPatterns.numeric.test(editableLElementWrapper.val().trim())
-      //       || !editableLElementWrapper.val().length));
-      //   }
-      // }
-    }
-
-    function toggled(open) {
-    }
-
-    function toggleDropdown($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      $scope.status.isopen = !$scope.status.isopen;
-    }
-
-  }
-})(window.angular);
+})();
