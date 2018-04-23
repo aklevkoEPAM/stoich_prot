@@ -27,14 +27,19 @@ function MainController($scope) {
                 },
                 mw: {
                     name: 'MW',
+                    nameAdditions: {
+                        units: 'g/mol'
+                    },
                     value: 56.106,
-                    headUnits: 'g/mol',
                     style: {
                         classes: ['text-right']
                     }
                 },
                 equiv: {
                     name: 'Equiv',
+                    nameAdditions: {
+                        icon: 'lock_closed'
+                    },
                     value: 1,
                     style: {
                         classes: ['text-right']
@@ -57,6 +62,9 @@ function MainController($scope) {
                 },
                 purity: {
                     name: 'Purity',
+                    nameAdditions: {
+                        units: '%'
+                    },
                     value: 100,
                     style: {
                         classes: ['text-right']
@@ -154,36 +162,72 @@ function MainController($scope) {
         body: [
             {
                 formula: {
+                    name: 'Formula',
                     value: 'KOH'
                 },
                 mw: {
+                    name: 'MW',
+                    nameAdditions: {
+                        units: 'g/mol'
+                    },
                     value: 56.106,
                     style: {
                         classes: ['text-right']
                     }
                 },
                 equiv: {
+                    name: 'Equiv',
+                    nameAdditions: {
+                        icon: 'lock_closed'
+                    },
+                    style: {
+                        classes: ['text-right']
+                    },
                     value: 1
                 },
                 mass: {
+                    name: 'Mass',
+                    style: {
+                        classes: ['text-right']
+                    },
                     value: 5.00,
                     units: ['mg', 'g', 'kg']
                 },
                 volume: {
+                    name: 'Volume',
+                    style: {
+                        classes: ['text-right']
+                    },
                     value: 6
                 },
                 purity: {
+                    name: 'Purity',
+                    nameAdditions: {
+                        units: '%'
+                    },
+                    style: {
+                        classes: ['text-right']
+                    },
                     value: 100
                 },
                 quantifier: {
+                    name: 'Quantifier',
+                    style: {
+                        classes: ['text-right']
+                    },
                     value: 0.25,
                     units: ['g/mL', 'g/L', 'kg/L']
                 },
                 n: {
+                    name: 'n',
+                    style: {
+                        classes: ['text-right']
+                    },
                     value: 19.213,
                     units: ['mol', 'mmol']
                 },
                 comment: {
+                    name: 'Comment',
                     value: ''
                 }
             }
@@ -201,32 +245,76 @@ function MainController($scope) {
         }],
         body: [{
             formula: {
+                name: 'Formula',
                 value: 'HF'
             },
             massExp: {
+                name: 'Mass',
+                nameAdditions: {
+                    remark: 'expected'
+                },
+                style: {
+                    classes: ['text-right']
+                },
                 value: 25,
                 units: ['mg', 'g', 'kg']
             },
             massAct: {
+                name: 'Mass',
+                nameAdditions: {
+                    remark: 'actual'
+                },
+                style: {
+                    classes: ['text-right']
+                },
                 value: 4.6,
                 units: ['mg', 'g', 'kg']
             },
             purity: {
+                name: 'Purity',
+                nameAdditions: {
+                    units: '%'
+                },
+                style: {
+                    classes: ['text-right']
+                },
                 value: 86
             },
             nExp: {
+                name: 'n',
+                nameAdditions: {
+                    remark: 'expected'
+                },
+                style: {
+                    classes: ['text-right']
+                },
                 value: 1.2,
                 units: ['mol', 'mmol']
             },
             nAct: {
+                name: 'n',
+                nameAdditions: {
+                    remark: 'actual'
+                },
+                style: {
+                    classes: ['text-right']
+                },
                 value: 1.1,
                 units: ['mol', 'mmol']
             },
-            yield: {
-                value: 12
+            yieldAct: {
+                name: 'Yield %',
+                nameAdditions: {
+                    remark: 'actual'
+                },
+                style: {
+                    classes: ['text-right']
+                },
+                value: 67.8
             }
         }]
     };
+
 }
 
 // (function () {

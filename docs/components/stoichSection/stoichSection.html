@@ -50,10 +50,23 @@
             <col ng-repeat="(cellName, cellProperties) in tableData.body[0]" class="cell-{{cellName}}">
         </colgroup>
         <thead>
+
+        <!--button {-->
+        <!--border: 0;-->
+        <!--&.icon-lock_closed {-->
+        <!--background: none;-->
+        <!--color: @yellowDark20;-->
+        <!--cursor: pointer;-->
+        <!--font-size: 15px;-->
+        <!--}-->
+        <!--}-->
         <tr>
             <td ng-repeat="(cellName, cellProperties) in tableData.body[0]" class="cell-{{cellName}}">
-                <span class="">{{cellName}}</span>
-                <em ng-if="cellProperties.headUnits">({{cellProperties.headUnits}})</em>
+                <span class="">{{cellProperties.name}}</span>
+                <button ng-if="cellProperties.nameAdditions.icon"
+                        class="icon icon-{{cellProperties.nameAdditions.icon}}"></button>
+                <em ng-if="cellProperties.nameAdditions.units">({{cellProperties.nameAdditions.units}})</em>
+                <small ng-if="cellProperties.nameAdditions.remark">[{{cellProperties.nameAdditions.remark}}]</small>
             </td>
         </tr>
         </thead>

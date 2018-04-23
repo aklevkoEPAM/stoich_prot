@@ -9,6 +9,30 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'roboto', 'roboto-regular';
+  src: url('styles/fonts/roboto/Roboto-Regular.ttf');
+}
+@font-face {
+  font-family: 'roboto-thin';
+  src: url('styles/fonts/roboto/Roboto-Thin.ttf');
+}
+@font-face {
+  font-family: 'roboto-light';
+  src: url('styles/fonts/roboto/Roboto-Light.ttf');
+}
+@font-face {
+  font-family: 'roboto-thick';
+  src: url('styles/fonts/roboto/Roboto-Medium.ttf');
+}
+@font-face {
+  font-family: 'roboto-bold';
+  src: url('styles/fonts/roboto/Roboto-Bold.ttf');
+}
+@font-face {
+  font-family: 'roboto-black';
+  src: url('styles/fonts/roboto/Roboto-Black.ttf');
+}
 /*
  * Copyright (C) 1993-2016 ID Business Solutions Limited
  * All rights reserved
@@ -540,7 +564,7 @@ body {
 }
 .stoich-section__table td {
   border-right: 2px solid #DDDDDD;
-  font: normal 13px/1.4 Roboto, arial, sans-serif;
+  font: normal 13px/1.4 roboto, arial, sans-serif;
   padding: 0 7px;
 }
 .stoich-section__table td:focus {
@@ -550,24 +574,16 @@ body {
 .stoich-section__table thead td {
   background-color: #F5F5F6;
   color: #434A54;
-  font: 500 13px/26px Roboto, arial, sans-serif;
+  font: normal 13px/26px roboto-thick, arial, sans-serif;
   padding-top: 3px;
   white-space: nowrap;
 }
-.stoich-section__table thead td span.text-uppercase {
-  text-transform: uppercase;
-}
-.stoich-section__table thead td span.text-lowercase {
-  text-transform: lowercase;
-}
 .stoich-section__table thead td em {
-  font-weight: normal;
-  font-style: normal;
+  font: normal normal 13px/26px roboto, arial, sans-serif;
 }
 .stoich-section__table thead td small {
   font-size: 11px;
-  font-weight: normal;
-  font: normal 11px/25px Roboto, arial, sans-serif;
+  font: normal 11px/25px roboto, arial, sans-serif;
 }
 .stoich-section__table thead td button {
   border: 0;
@@ -727,10 +743,10 @@ body {
   width: 80px;
 }
 .stoich-section__table .cell-nAct {
-  min-width: 140px;
-  width: 140px;
+  min-width: 80px;
+  width: 80px;
 }
-.stoich-section__table .cell-yield {
+.stoich-section__table .cell-yieldAct {
   min-width: 115px;
   width: 115px;
 }
@@ -879,7 +895,7 @@ body {
   border: none;
   box-shadow: none;
   color: #325499;
-  font: normal 13px/26px Roboto, arial, sans-serif;
+  font: normal 13px/26px roboto, arial, sans-serif;
   padding: 0;
 }
 .btn-clean .icon {
