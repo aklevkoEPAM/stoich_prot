@@ -1,0 +1,70 @@
+<section class="stoich-section stoich-section_{{tableData.metaInfo.name}}" keyboard-navigation>
+    <table class="stoich-section__table stoich-section__table_sticky layout-type-short" data-table-type="sticky">
+        <colgroup>
+            <col class="cell-fixed-component">
+            <col class="cell-limit">
+        </colgroup>
+        <thead>
+        <tr>
+            <td class="cell-fixed-component colorized">{{tableData.metaInfo.name}}
+                <button class="btn btn-clean right" ng-click="addNew(tableData, tableData.metaInfo.type)">
+                    <i class="icon icon-plus"></i>
+                    Add new
+                </button>
+            </td>
+            <td class="cell-limit">Limit</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="stickyRow in tableData.sticky" tabindex="{{$index}}">
+            <td class="cell-fixed-component" tabindex="0">
+                <div class="wrapper-flexible">
+                    <button class="btn btn-framed btn-framed-no-text btn-info flex-left">
+                        <i class="icon-stack icon-stack-fw">
+                            <i class="icon icon-fw icon-stack-2x icon-info-letter"></i>
+                            <i class="icon icon-fw icon-stack-2x icon-empty"></i>
+                        </i>
+                    </button>
+                    <div class="in-line-editable-wrapper">
+                        <strong class="component-prefix">({{tableData.metaInfo.prefix}}{{$index + 1}})</strong>
+                        <inline-editing-directive component-data="stickyRow"></inline-editing-directive>
+                    </div>
+                    <button class="btn btn-framed btn-framed-no-text btn-options flex-right">
+                        <i class="icon icon-options"></i>
+                    </button>
+                </div>
+            </td>
+            <td class="cell-limit" tabindex="0">
+                <div class="pad-standard">
+                    <button class="btn-rounded" ng-click="potHasLimit = !potHasLimit">
+                        <i ng-if="potHasLimit" class="icon icon-tick"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="stoich-section__table layout-type-short" data-table-type="normal">
+        <!--this colgroup is a must to make the table static-->
+        <colgroup>
+            <col ng-repeat="(cellName, cellProperties) in tableData.body[0]" class="cell-{{cellName}}">
+        </colgroup>
+        <thead>
+        <tr>
+            <td ng-repeat="(cellName, cellProperties) in tableData.body[0]" class="cell-{{cellName}}">
+                <span class="">{{cellName}}</span>
+                <em ng-if="cellProperties.headUnits">({{cellProperties.headUnits}})</em>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="bodyRow in tableData.body" tabindex="{{$index}}">
+            <td ng-repeat="(cellName, cellProperties) in bodyRow" class="cell-{{cellName}}" tabindex="{{$index}}">
+                <div class="in-line-editable-wrapper {{cellProperties.style.classes.join(' ')}}">
+                    <inline-editing-directive component-data="cellProperties"></inline-editing-directive>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
