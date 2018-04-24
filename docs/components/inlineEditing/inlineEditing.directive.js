@@ -21,10 +21,15 @@ function InlineEditingDirective(keyCodes) {
 }
 
 function inlineEditingLink($scope, el, keyCodes) {
+
+    console.log('prod');
+    el.off();
+
     el.closest('td').on('keydown', function (keyDownEvent) {
+        var currentTabIndex = el.closest('td')[0].tabIndex;
         switch (keyDownEvent.which) {
             case keyCodes.Enter:
-
+                console.log('enter');
                 if (el.closest('td').find('form').length) {
                     $scope.editDisabled = true;
                     el.closest('td').focus();
@@ -33,29 +38,6 @@ function inlineEditingLink($scope, el, keyCodes) {
                     el.closest('td').focus();
                     el.closest('td').find('inline-editing-directive>span').click();
                 }
-
-                // } else {
-                //     keyDownEvent.preventDefault();
-                //     $scope.editDisabled = true;
-                //     el.closest('td').focus();
-                // }
-
-                // if ($('body').find('ul.dropdown-menu').is(':visible:not(:empty)')) {
-                //     el.closest('td').off();
-                //     el.closest('td').find('inline-editing-directive>span span').blur();
-                //    $('body > ul.dropdown-menu li:first-child a').focus();
-                // }
-
-                // el.on('keyDown', function (keyDownEvent) {
-                //     if (keyDownEvent.keyCode === keyCodes.Down) {
-                //         console.log('here');
-                //         if ($('body').find('ul.dropdown-menu').is(':visible:not(:empty)')) {
-                //
-                //            $('body > ul.dropdown-menu li:first-child a').focus();
-                //         }
-                //     }
-                // });
-
                 break;
             case keyCodes.Escape:
                 console.log('escape');
@@ -67,6 +49,50 @@ function inlineEditingLink($scope, el, keyCodes) {
                 keyDownEvent.preventDefault();
                 $scope.editDisabled = true;
                 el.closest('td').next('td').focus();
+                break;
+            case keyCodes.Down:
+                var dropdownFirstElement = $('body > ul.dropdown-menu li:first-child a');
+                var dropdownEventWrapper = $('body > ul.dropdown-menu');
+                var dropdownEventElement = $('body > ul.dropdown-menu li a');
+                var cellToReturn = el.closest('td');
+                if ($(keyDownEvent.target).closest('td').find('.has-dropdown').length) {
+                    keyDownEvent.preventDefault();
+
+                    //editableElementWrapper.blur();
+                    console.log('ewr');
+                    dropdownFirstElement.focus();
+                    dropdownEventElement.on('keydown', function (e) {
+                        //editableElementWrapper.blur();
+                        e.stopPropagation();
+                        e.preventDefault();
+                        switch (e.which) {
+                            case keyCodes.Up:
+                                $(e.target).parent('li').prev().find('a').focus();
+                                break;
+                            case keyCodes.Down:
+                                console.log('ewrd');
+                                $(e.target).parent('li').next().find('a').focus();
+                                break;
+                            case keyCodes.Enter:
+                                $scope.$apply($scope.setUnit($(e.target)[0].innerHTML));
+                                cellToReturn.focus();
+                                dropdownEventWrapper.hide();
+                                dropdownEventElement.off('keydown');
+                                break;
+                            case keyCodes.Escape: {
+                                cellToReturn.focus();
+                                dropdownEventWrapper.hide();
+                                dropdownEventElement.off('keydown');
+                                break;
+                            }
+                            default:
+                                break;
+
+                        }
+                    });
+                }
+
+            default:
                 break;
         }
     });
@@ -95,24 +121,26 @@ function InlineEditingController($scope, keyCodes) {
         editableElementWrapper;
 
     angular.extend(vm, {
-        setUnit: setUnit,
         setBehavior: setBehavior,
         focusParent: focusParent,
         toggled: toggled,
         toggleDropdown: toggleDropdown,
-        unit: $scope.componentData.units ? $scope.componentData.units[0] : undefined,
-        status: {
-            isopen: false
-        }
+        unit: $scope.componentData.units ? $scope.componentData.units[0] : undefined
     });
 
-    function setUnit(choice) {
+    $scope.setUnit = function (choice) {
         vm.unit = choice;
-    }
+    };
+
+    $scope.status = {
+        isopen: false
+    };
+
+    $scope.showUnits = true;
 
     function focusParent(form) {
 
-        console.log(form);
+
         //  form.hide();
         // if (form.$editables[0].inputEl[0].closest('td').is(':focus')) {
         //     console.log('uasdf');
@@ -130,11 +158,11 @@ function InlineEditingController($scope, keyCodes) {
         var editableElement = form.$editables[0].inputEl[0];
         editableElement.selectionStart = editableElement.selectionStop = editableElement.value.length;
 
-
         editableElementWrapper = form.$editables[0].inputEl;
         editableElementWrapper
-            .on('blur', blurEventHandler);
-        // .on('keydown', keyDownHandler)
+            .on('blur', blurEventHandler)
+            .on('keydown', keyDownHandler);
+
         // .on('keyup', keyUpHandler);
         //.on('keyup', disableOtherEditableElementsOnKeyUp);
 
@@ -143,6 +171,54 @@ function InlineEditingController($scope, keyCodes) {
             form.$editables[0].scope.$apply(function () {
                 form.$submit();
             });
+        }
+
+        function keyDownHandler(e) {
+            console.log('her');
+            editableElementWrapper.off('keydown');
+            //todo make all below one separate function
+            var dropdownFirstElement = $('ul.dropdown-menu li:first-child a');
+            var dropdownEventWrapper = $('ul.dropdown-menu');
+            var dropdownEventElement = $('ul.dropdown-menu li a');
+
+            var cellToReturn = $(form.$editables[0].inputEl).parents('td');
+            if (e.which === keyCodes.Down && $(e.target).closest('td').find('.has-dropdown').length) {
+                e.preventDefault();
+                //editableElementWrapper.blur();
+                console.log('ewr');
+                dropdownFirstElement.focus();
+                dropdownEventElement.on('keydown', function (e) {
+                    editableElementWrapper.blur();
+                    e.stopPropagation();
+                    e.preventDefault();
+                    switch (e.which) {
+                        case keyCodes.Up:
+                            $(e.target).parent('li').prev().find('a').focus();
+                            break;
+                        case keyCodes.Down:
+                            $scope.showUnits = false;
+                            console.log('ewr');
+                            $(e.target).parent('li').next().find('a').focus();
+                            break;
+                        case keyCodes.Enter:
+                            $scope.$apply($scope.setUnit($(e.target)[0].innerHTML));
+                            cellToReturn.focus();
+                            dropdownEventWrapper.hide();
+                            dropdownEventElement.off('keydown');
+                            break;
+                        case keyCodes.Escape: {
+                            cellToReturn.focus();
+                            dropdownEventWrapper.hide();
+                            dropdownEventElement.off('keydown');
+                            break;
+                        }
+                        default:
+                            console.log('erer');
+                            break;
+
+                    }
+                });
+            }
         }
 
         // function keyUpHandler(e) {

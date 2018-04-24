@@ -25,7 +25,7 @@ function keyboardNavigationLink($scope, el, attr, keyCodes) {
             if ($.inArray(e.which, [keyCodes.Left, keyCodes.Up, keyCodes.Right, keyCodes.Down, keyCodes.Tab, keyCodes.Enter]) < 0) {
                 return;
             }
-            if (e.target.nodeName === "TD") {
+            if (e.target.nodeName === 'TD') {
                 var td = $(e.target),
                     tr = td.closest('tr'),
                     moveTo = null,
@@ -69,6 +69,7 @@ function keyboardNavigationLink($scope, el, attr, keyCodes) {
 
                     case keyCodes.Up:
                     case keyCodes.Down: {
+                        console.log('berwer');
                         e.preventDefault();
                         e.stopPropagation();
                         e.stopImmediatePropagation();

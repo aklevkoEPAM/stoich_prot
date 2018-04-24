@@ -568,7 +568,6 @@ body {
   padding: 0 7px;
 }
 .stoich-section__table td:focus {
-  background-color: #dce8ff;
   outline: none;
 }
 .stoich-section__table thead td {
@@ -690,6 +689,9 @@ body {
   min-width: 46px;
   width: 46px;
 }
+.stoich-section__table .cell-limit:focus {
+  background-color: #dce8ff;
+}
 .stoich-section__table .cell-formula {
   min-width: 180px;
   width: 180px;
@@ -779,6 +781,10 @@ body {
 }
 .stoich-section__table_sticky .in-line-editable-wrapper .view-element {
   width: 212px;
+}
+td:focus .in-line-editable-wrapper .view-element {
+  background-color: #dce8ff;
+  outline: none;
 }
 .in-line-editable-wrapper .editable-dropdown {
   display: block;
@@ -943,6 +949,7 @@ body {
 .dropdown-menu > li > a {
   font-size: 13px;
   padding: 8px 20px;
+  outline: none;
 }
 .dropdown-menu > li > a:hover {
   background: linear-gradient(180deg, rgba(240, 245, 255, 0.5) 0%, rgba(220, 232, 255, 0.5) 100%);
