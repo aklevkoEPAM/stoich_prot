@@ -1,6 +1,9 @@
 
 
-<span uib-dropdown dropdown-append-to-body keyboard-nav on-toggle="vm.toggled(open)" class="view-element"
+<span uib-dropdown dropdown-append-to-body
+      class="view-element"
+      auto-close="outsideClick"
+      is-open="status.isopen"
       ng-class="{'has-dropdown': componentData.units}"
       uib-dropdown-toggle
       buttons="no"
@@ -8,6 +11,7 @@
       e-class="in-line-editable"
       e-clickable="true"
       edit-disabled="editDisabled"
+      onbeforesave="vm.stopEditMode()"
       e-ng-focus="vm.setBehavior($form)">
     <span class="editable-dropdown value-container" uib-dropdown-toggle>
         {{componentData.value || ''}} {{componentData.value && componentData.units ? vm.unit : ''}}

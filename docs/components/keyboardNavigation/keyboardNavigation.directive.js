@@ -94,7 +94,8 @@ function keyboardNavigationLink($scope, el, attr, keyCodes) {
             }
         });
 
-       // el.off();  todo uncomment. Was commented before the demo because of a strange bug with stucking cell focus.
+       // el.off();  todo uncomment after investigation. A defect with the event propagation/bubbling:
+        // When user adds rows and tries to navigate down the rows fast, the focused cell is freezed. The keydown event is catched by inlineEditing handler.
     }
 
 

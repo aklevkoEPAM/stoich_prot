@@ -9,7 +9,7 @@ function InlineEditingDirective(keyCodes) {
     return {
         restrict: "E",
         scope: {
-            componentData: '='
+            componentData: '<'
         },
         controllerAs: "vm",
         controller: 'inlineEditingController',
@@ -21,81 +21,124 @@ function InlineEditingDirective(keyCodes) {
 }
 
 function inlineEditingLink($scope, el, keyCodes) {
-
-    console.log('prod');
     el.off();
+    el.closest('td').on('keydown', grandKeyDownHandler);
 
-    el.closest('td').on('keydown', function (keyDownEvent) {
-        var currentTabIndex = el.closest('td')[0].tabIndex;
-        switch (keyDownEvent.which) {
-            case keyCodes.Enter:
+    function grandKeyDownHandler(keyDownEvent) {
+        var keyCode = keyDownEvent.which;
+        var dropdownFirstElement = $('body > ul.dropdown-menu li:first-child a');
+        var dropdownEventWrapper = $('body > ul.dropdown-menu');
+        var dropdownEventElement = $('body > ul.dropdown-menu li a');
+        switch (true) {
+            case (keyCode === keyCodes.Enter):
+
                 console.log('enter');
                 if (el.closest('td').find('form').length) {
                     $scope.editDisabled = true;
                     el.closest('td').focus();
+                    if (dropdownEventWrapper) {
+                        $('html').click(); //to hide the dropdown programmatically
+                        dropdownEventElement.off('keydown');
+                        $scope.isInDropdown = false;
+                    }
                 } else {
                     $scope.editDisabled = false;
                     el.closest('td').focus();
-                    el.closest('td').find('inline-editing-directive>span').click();
+                    el.closest('td').find('inline-editing-directive>span.view-element').click();
                 }
+
                 break;
-            case keyCodes.Escape:
+
+            case ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 48 && keyCode <= 57)):
+
+                $scope.editDisabled = false;
+                el.closest('td').focus();
+                el.closest('td').find('inline-editing-directive>span.view-element').click();
+
+                // change the value of the cell after the first keydown
+                if ($scope.componentData.value) {
+                    $scope.componentData.value = $scope.componentData.value + keyDownEvent.originalEvent.key;
+                } else {
+                    $scope.componentData.value = keyDownEvent.originalEvent.key;
+                }
+
+                $scope.isInDropdown = false;
+
+                break;
+            case (keyCode === keyCodes.Escape):
                 console.log('escape');
                 $scope.editDisabled = true;
                 el.closest('td').focus();
                 break;
-            case keyCodes.Tab:
+            case (keyCode === keyCodes.Tab):
                 console.log('tab');
                 keyDownEvent.preventDefault();
+
                 $scope.editDisabled = true;
+                dropdownEventWrapper.hide();
+                dropdownEventElement.off('keydown');
+
+                $scope.isInDropdown = false;
                 el.closest('td').next('td').focus();
                 break;
-            case keyCodes.Down:
-                var dropdownFirstElement = $('body > ul.dropdown-menu li:first-child a');
-                var dropdownEventWrapper = $('body > ul.dropdown-menu');
-                var dropdownEventElement = $('body > ul.dropdown-menu li a');
+            case (keyCode === keyCodes.Down):
+                $scope.isInDropdown = true;
                 var cellToReturn = el.closest('td');
                 if ($(keyDownEvent.target).closest('td').find('.has-dropdown').length) {
                     keyDownEvent.preventDefault();
-
-                    //editableElementWrapper.blur();
                     console.log('ewr');
                     dropdownFirstElement.focus();
                     dropdownEventElement.on('keydown', function (e) {
+                        $scope.isInDropdown = true;
                         //editableElementWrapper.blur();
                         e.stopPropagation();
                         e.preventDefault();
+                        console.log('ewrd');
                         switch (e.which) {
                             case keyCodes.Up:
                                 $(e.target).parent('li').prev().find('a').focus();
                                 break;
                             case keyCodes.Down:
-                                console.log('ewrd');
+                                $scope.isInDropdown = true;
                                 $(e.target).parent('li').next().find('a').focus();
                                 break;
                             case keyCodes.Enter:
                                 $scope.$apply($scope.setUnit($(e.target)[0].innerHTML));
                                 cellToReturn.focus();
-                                dropdownEventWrapper.hide();
+                                //$scope.isInDropdown = false;
+                                console.log('in drop enter');
+                                $('html').click(); //to hide the dropdown programmatically
                                 dropdownEventElement.off('keydown');
-                                break;
-                            case keyCodes.Escape: {
-                                cellToReturn.focus();
-                                dropdownEventWrapper.hide();
-                                dropdownEventElement.off('keydown');
-                                break;
-                            }
-                            default:
-                                break;
 
+                                $scope.form.$editables[0].scope.$apply(function () {
+                                    $scope.form.$submit();
+                                });
+
+                                break;
+                            case keyCodes.Escape:
+                                console.log('in drop escape');
+                                cellToReturn.focus();
+                                $('html').click(); //to hide the dropdown programmatically
+                                dropdownEventElement.off('keydown');
+                                $scope.form.$editables[0].scope.$apply(function () {
+                                    $scope.form.$submit();
+                                });
+                                break;
+                            default:
+                                console.log('in drop default');
+                                $scope.isInDropdown = false;
+                                break;
                         }
                     });
                 }
+                break;
 
             default:
+                console.log('in all default');
+                $scope.isInDropdown = false;
                 break;
         }
-    });
+    }
 
     el.closest('td').find('span.view-element').on('click', function (e) {
         if ($scope.editDisabled === true) {
@@ -106,6 +149,7 @@ function inlineEditingLink($scope, el, keyCodes) {
     });
     el.closest('td').on('blur', function (e) {
         if ($scope.editDisabled === false) {
+            console.log('link blur');
             $scope.editDisabled = true;
         }
     });
@@ -122,7 +166,6 @@ function InlineEditingController($scope, keyCodes) {
 
     angular.extend(vm, {
         setBehavior: setBehavior,
-        focusParent: focusParent,
         toggled: toggled,
         toggleDropdown: toggleDropdown,
         unit: $scope.componentData.units ? $scope.componentData.units[0] : undefined
@@ -130,31 +173,17 @@ function InlineEditingController($scope, keyCodes) {
 
     $scope.setUnit = function (choice) {
         vm.unit = choice;
+        $scope.status.isopen = false;
     };
 
     $scope.status = {
         isopen: false
     };
 
-    $scope.showUnits = true;
-
-    function focusParent(form) {
-
-
-        //  form.hide();
-        // if (form.$editables[0].inputEl[0].closest('td').is(':focus')) {
-        //     console.log('uasdf');
-        // }
-        //form.$show();
-        // } else {
-        //     form.$editables[0].inputEl[0].closest('td').focus();
-        //     form.$hide();
-        // }
-        //setBehavior(form);
-
-    }
-
     function setBehavior(form) {
+
+        $scope.form = form;
+
         var editableElement = form.$editables[0].inputEl[0];
         editableElement.selectionStart = editableElement.selectionStop = editableElement.value.length;
 
@@ -168,24 +197,29 @@ function InlineEditingController($scope, keyCodes) {
 
 
         function blurEventHandler() {
-            form.$editables[0].scope.$apply(function () {
-                form.$submit();
-            });
+            if (!$scope.isInDropdown) {
+                form.$editables[0].scope.$apply(function () {
+                    console.log('controller blur');
+                    form.$submit();
+                });
+            }
         }
 
         function keyDownHandler(e) {
-            console.log('her');
-            editableElementWrapper.off('keydown');
-            //todo make all below one separate function
+            $scope.isInDropdown = true;
+            var keyCode = e.which;
+            if ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 48 && keyCode <= 57)) {
+                e.stopPropagation();
+            }
+
             var dropdownFirstElement = $('ul.dropdown-menu li:first-child a');
             var dropdownEventWrapper = $('ul.dropdown-menu');
             var dropdownEventElement = $('ul.dropdown-menu li a');
 
             var cellToReturn = $(form.$editables[0].inputEl).parents('td');
+
             if (e.which === keyCodes.Down && $(e.target).closest('td').find('.has-dropdown').length) {
                 e.preventDefault();
-                //editableElementWrapper.blur();
-                console.log('ewr');
                 dropdownFirstElement.focus();
                 dropdownEventElement.on('keydown', function (e) {
                     editableElementWrapper.blur();
@@ -196,20 +230,25 @@ function InlineEditingController($scope, keyCodes) {
                             $(e.target).parent('li').prev().find('a').focus();
                             break;
                         case keyCodes.Down:
-                            $scope.showUnits = false;
-                            console.log('ewr');
                             $(e.target).parent('li').next().find('a').focus();
                             break;
                         case keyCodes.Enter:
                             $scope.$apply($scope.setUnit($(e.target)[0].innerHTML));
                             cellToReturn.focus();
-                            dropdownEventWrapper.hide();
                             dropdownEventElement.off('keydown');
+                            $scope.isInDropdown = false;
+                            form.$editables[0].scope.$apply(function () {
+                                $scope.status.isopen = !$scope.status.isopen;
+                                form.$submit();
+                            });
                             break;
                         case keyCodes.Escape: {
                             cellToReturn.focus();
-                            dropdownEventWrapper.hide();
+                            $('html').click();
                             dropdownEventElement.off('keydown');
+                            form.$editables[0].scope.$apply(function () {
+                                form.$submit();
+                            });
                             break;
                         }
                         default:
@@ -219,6 +258,7 @@ function InlineEditingController($scope, keyCodes) {
                     }
                 });
             }
+            $scope.isInDropdown = false;
         }
 
         // function keyUpHandler(e) {
@@ -257,7 +297,7 @@ function InlineEditingController($scope, keyCodes) {
     function toggleDropdown($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        $scope.status.isopen = !$scope.status.isopen;
+        //$scope.status.isopen = !$scope.status.isopen;
     }
 
 }

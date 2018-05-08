@@ -12,7 +12,7 @@ function StoichSectionDirective() {
         controllerAs: "vm",
         controller: 'stoichSectionController',
         templateUrl: "components/stoichSection/stoichSection.html",
-        link: function(scope, el, attrs) {
+        link: function (scope, el, attrs) {
         }
     };
 }
@@ -20,7 +20,10 @@ function StoichSectionDirective() {
 StoichSectionController.$inject = ['$scope'];
 
 function StoichSectionController($scope) {
-    $scope.addNew = function (arr, type) {
+
+    $scope.addNew = function (e, arr, type) {
+
+
         var reactantRowPlaceholder = makePlaceholder('reactant'),
             productRowPlaceholder = makePlaceholder('product');
 
@@ -31,6 +34,11 @@ function StoichSectionController($scope) {
             arr.sticky.push(productRowPlaceholder.newStickyRow);
             arr.body.push(productRowPlaceholder.newBodyRow);
         }
+
+        // set focus to the added row, need timeout for another digest cycle
+        setTimeout(function () {
+            $(e.target).parents('table').find('tbody tr:last-child td.cell-fixed-component span.editable-click').click();
+        }, 0);
     };
 
     function makePlaceholder(type) {
