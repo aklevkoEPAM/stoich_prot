@@ -17,7 +17,7 @@
         {{componentData.value || ''}} {{componentData.value && componentData.units ? vm.unit : ''}}
     </span>
     <ul uib-dropdown-menu ng-if="componentData.units">
-        <li ng-repeat="choice in componentData.units">
+        <li ng-repeat="choice in componentData.units" ng-class="{'selected': vm.unit === choice}">
             <a href ng-click="setUnit(choice)">{{choice}}</a>
         </li>
     </ul>

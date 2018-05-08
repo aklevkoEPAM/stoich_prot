@@ -946,6 +946,9 @@ td:focus .in-line-editable-wrapper .view-element {
   border-bottom: 1px solid #ECEDEE;
   height: 35px;
 }
+.dropdown-menu > li.selected a {
+  color: #548dff;
+}
 .dropdown-menu > li > a {
   font-size: 13px;
   padding: 8px 20px;
